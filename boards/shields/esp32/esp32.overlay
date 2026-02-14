@@ -39,6 +39,11 @@
     };
 };
 
+/* Enable ADC for Battery Sensing */
+&adc {
+    status = "okay";
+};
+
 /* OLED Display (I2C on D4/D5) */
 &i2c0 {
     status = "okay";
