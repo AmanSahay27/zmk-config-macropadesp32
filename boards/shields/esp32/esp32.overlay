@@ -4,7 +4,7 @@
         zmk,battery = &vbatt;
     };
 
-    # 3x3 Matrix (9 Switches)
+    /* 3x3 Matrix for 9 Switches */
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         wakeup-source;
@@ -16,11 +16,11 @@
                     <&gpio0 10 GPIO_ACTIVE_HIGH>; // D10
     };
 
-    # Rotary Encoder (Pins D6 & D7)
+    /* Rotary Encoder */
     encoder: encoder {
         compatible = "alps,ec11";
-        a-gpios = <&gpio0 21 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; 
-        b-gpios = <&gpio0 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; 
+        a-gpios = <&gpio0 21 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // D6
+        b-gpios = <&gpio0 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // D7
         steps = <80>;
     };
 
@@ -30,11 +30,29 @@
         triggers-per-rotation = <20>;
     };
 
-    # Battery Sensor on D0
+    /* Battery Voltage Divider on D0 (GPIO 2) */
     vbatt: vbatt {
         compatible = "zmk,battery-voltage-divider";
         io-channels = <&adc 2>; 
         output-ohm = <1000000>;
         full-ohm = <2000000>;
+    };
+};
+
+/* OLED Display (I2C on D4/D5) */
+&i2c0 {
+    status = "okay";
+    oled: ssd1306@3c {
+        compatible = "solomon,ssd1306fb";
+        reg = <0x3c>;
+        width = <128>;
+        height = <64>;
+        segment-offset = <0>;
+        page-offset = <0>;
+        display-offset = <0>;
+        multiplex-ratio = <63>;
+        segment-remap;
+        com-invdir;
+        prechargep = <0x22>;
     };
 };
