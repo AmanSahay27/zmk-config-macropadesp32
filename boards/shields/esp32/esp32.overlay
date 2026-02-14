@@ -4,19 +4,25 @@
         zmk,battery = &vbatt;
     };
 
-    /* 3x3 Matrix */
+    /* =========================
+     * 3x3 Matrix (9 Keys)
+     * ========================= */
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         wakeup-source;
+
         row-gpios = <&gpio0 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
                     <&gpio0 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
                     <&gpio0 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+
         col-gpios = <&gpio0 8 GPIO_ACTIVE_HIGH>,
                     <&gpio0 9 GPIO_ACTIVE_HIGH>,
                     <&gpio0 10 GPIO_ACTIVE_HIGH>;
     };
 
-    /* Rotary Encoder */
+    /* =========================
+     * Rotary Encoder (EC11)
+     * ========================= */
     encoder: encoder {
         compatible = "alps,ec11";
         a-gpios = <&gpio0 21 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
@@ -30,21 +36,30 @@
         triggers-per-rotation = <20>;
     };
 
-    /* Battery Voltage Divider */
+    /* =========================
+     * Battery Voltage Divider
+     * =========================
+     * Make sure you actually wired
+     * a resistor divider to GPIO2
+     */
     vbatt: vbatt {
         compatible = "zmk,battery-voltage-divider";
         io-channels = <&adc1 2>;
-        output-ohm = <1000000>;
-        full-ohm = <2000000>;
+        output-ohms = <1000000>;
+        full-ohms = <2000000>;
     };
 };
 
-/* Enable ADC1 (ESP32-C3 uses adc1, not adc0) */
+/* =========================
+ * Enable ADC1 (ESP32-C3)
+ * ========================= */
 &adc1 {
     status = "okay";
 };
 
-/* OLED */
+/* =========================
+ * OLED SSD1306 (I2C0)
+ * ========================= */
 &i2c0 {
     status = "okay";
 
