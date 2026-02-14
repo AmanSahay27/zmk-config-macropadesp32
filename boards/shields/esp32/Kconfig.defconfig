@@ -1,0 +1,6 @@
+if SHIELD_ESP32
+
+config ZMK_KEYBOARD_NAME
+    default "esp32c3"
+
+endif # SHIELD_ESP32
