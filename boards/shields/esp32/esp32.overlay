@@ -33,14 +33,14 @@
     /* Battery Voltage Divider on D0 (GPIO 2) */
     vbatt: vbatt {
         compatible = "zmk,battery-voltage-divider";
-        io-channels = <&adc 2>; 
+        io-channels = <&adc0 2>; 
         output-ohm = <1000000>;
         full-ohm = <2000000>;
     };
 };
 
-/* Enable ADC for Battery Sensing */
-&adc {
+/* Enable ADC0 for Battery Sensing */
+&adc0 {
     status = "okay";
 };
 
